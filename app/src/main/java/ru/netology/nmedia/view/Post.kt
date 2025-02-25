@@ -7,9 +7,9 @@ data class Post(
     val published: String,
     val likedByMe: Boolean,
     val sharedByMe: Boolean,
-    var countLikes: Long = 0,
-    var countShare: Long = 0,
-    var countView: Long
+    val countLikes: Long = 0,
+    val countShare: Long = 0,
+    val countView: Long
 )
 fun countFormat (count: Long): String {
     return when (count) {

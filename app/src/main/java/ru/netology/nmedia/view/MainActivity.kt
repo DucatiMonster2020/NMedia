@@ -24,9 +24,6 @@ class MainActivity : AppCompatActivity() {
                         R.drawable.heart_outline
                     }
                 )
-                if (post.likedByMe) post.countLikes++ else post.countLikes--
-                countLikes.text = post.countLikes.toString()
-
                 author.text = post.author
                 published.text = post.published
                 content.text = post.content
