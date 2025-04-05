@@ -14,6 +14,11 @@ import util.AndroidUtils
 import util.focusAndShowKeyboard
 
 class MainActivity : AppCompatActivity() {
+    private fun setViewGroupVisibility(views: List<View>, visibility: Int) {
+        views.forEach { view ->
+            view.visibility = visibility
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,34 +53,47 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        val postEditGroup = listOf(
+            binding.content,
+            binding.save,
+            binding.cancelButton
+        )
         viewModel.edited.observe(this) { editedPost ->
-            if (editedPost.id == 0L)
-                return@observe
-            binding.content.requestFocus()
-            binding.content.setText(editedPost.content)
-            binding.content.focusAndShowKeyboard()
-        }
-        binding.save.setOnClickListener {
-           with(binding.content) {
-               if (text.isNullOrBlank()) {
-                   Toast.makeText(this@MainActivity,
-                       "Content can't be empty",
-                       Toast.LENGTH_SHORT
-                   ).show()
-                   return@setOnClickListener
-               }
-               viewModel.changeContent(text.toString())
-               viewModel.save()
-               binding.content.setText("")
-               binding.content.clearFocus()
-               AndroidUtils.hideKeyboard(this)
-           }
-        }
-        binding.cancelButton.setOnClickListener {
-            viewModel.edited.value = empty
-            binding.content.setText("")
-            binding.content.clearFocus()
-            binding.content.focusAndShowKeyboard()
+            if (editedPost.id == 0L) {
+                setViewGroupVisibility(postEditGroup, View.VISIBLE)
+                binding.content.requestFocus()
+                binding.content.setText(editedPost.content)
+                binding.content.focusAndShowKeyboard()
+            } else if (editedPost.id == -1L) {
+                setViewGroupVisibility(postEditGroup, View.GONE)
+            } else {
+                setViewGroupVisibility(postEditGroup, View.VISIBLE)
+                binding.content.setText(editedPost.content)
+                binding.content.requestFocus()
+            }
+            binding.save.setOnClickListener {
+                with(binding.content) {
+                    if (text.isNullOrBlank()) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Content can't be empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@setOnClickListener
+                    }
+                    viewModel.changeContent(text.toString())
+                    viewModel.save()
+                    binding.content.setText("")
+                    binding.content.clearFocus()
+                    AndroidUtils.hideKeyboard(this)
+                }
+            }
+            binding.cancelButton.setOnClickListener {
+                viewModel.edited.value = empty
+                binding.content.setText("")
+                binding.content.clearFocus()
+                binding.content.focusAndShowKeyboard()
+            }
         }
     }
 }
