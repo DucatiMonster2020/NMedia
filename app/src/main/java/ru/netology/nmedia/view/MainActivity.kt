@@ -14,11 +14,6 @@ import util.AndroidUtils
 import util.focusAndShowKeyboard
 
 class MainActivity : AppCompatActivity() {
-    private fun setViewGroupVisibility(views: List<View>, visibility: Int) {
-        views.forEach { view ->
-            view.visibility = visibility
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,23 +48,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        val postEditGroup = listOf(
-            binding.content,
-            binding.save,
-            binding.cancelButton
-        )
         viewModel.edited.observe(this) { editedPost ->
-            if (editedPost.id == 0L) {
-                setViewGroupVisibility(postEditGroup, View.VISIBLE)
+            if (editedPost.id == 0L)
+                return@observe
                 binding.content.requestFocus()
                 binding.content.setText(editedPost.content)
                 binding.content.focusAndShowKeyboard()
-            } else if (editedPost.id == -1L) {
-                setViewGroupVisibility(postEditGroup, View.GONE)
-            } else {
-                setViewGroupVisibility(postEditGroup, View.VISIBLE)
-                binding.content.setText(editedPost.content)
-                binding.content.requestFocus()
+                binding.editGroup.visibility = View.VISIBLE
             }
             binding.save.setOnClickListener {
                 with(binding.content) {
@@ -85,6 +70,7 @@ class MainActivity : AppCompatActivity() {
                     viewModel.save()
                     binding.content.setText("")
                     binding.content.clearFocus()
+                    binding.content.focusAndShowKeyboard()
                     AndroidUtils.hideKeyboard(this)
                 }
             }
@@ -93,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                 binding.content.setText("")
                 binding.content.clearFocus()
                 binding.content.focusAndShowKeyboard()
+                binding.editGroup.visibility = View.GONE
             }
         }
     }
-}
