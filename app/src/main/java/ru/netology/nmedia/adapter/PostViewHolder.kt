@@ -13,14 +13,13 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         with(binding) {
-            heart.setImageResource(
-                if (post.likedByMe) R.drawable.liked_heart else R.drawable.heart_outline
-            )
             author.text = post.author
             published.text = post.published
             content.text = post.content
-            countLikes.text = countFormat(post.countLikes)
-            countShare.text = countFormat(post.countShare)
+            heart.isChecked = post.likedByMe
+            heart.text = countFormat(post.countLikes)
+            share.isChecked = post.sharedByMe
+            share.text = countFormat(post.countShare)
             countView.text = countFormat(post.countView)
 
             heart.setOnClickListener {

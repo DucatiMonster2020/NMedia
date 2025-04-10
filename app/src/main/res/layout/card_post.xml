@@ -46,16 +46,17 @@
         app:layout_constraintTop_toBottomOf="@+id/author"
         tools:text="@sample/posts.json/data/published" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
+        style="@style/App.Widget.MenuButton"
+        app:iconTint="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_spacing"
         android:contentDescription="@string/description_post_menu"
-        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dots_vertical" />
+        app:icon="@drawable/dots_vertical" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -75,46 +76,33 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="@sample/posts.json/data/content" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/heart"
+        style="@style/App.Widget.LikeButton"
+        app:iconTint="@color/color_like_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/image_heart"
-        app:srcCompat="@drawable/heart_outline"
+        android:checkable="true"
+        app:icon="@drawable/ic_like_selector"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content"
         android:layout_marginTop="@dimen/common_spacing" />
 
-    <TextView
-        android:id="@+id/countLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/count_likes"
-        app:layout_constraintStart_toEndOf="@id/heart"
-        android:layout_marginStart="@dimen/common_spacing"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        android:layout_marginTop="@dimen/common_spacing" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/share"
+        style="@style/App.Widget.ShareButton"
+        app:iconTint="?attr/colorControlNormal"
+        android:textColor="?attr/colorControlNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/image_share"
-        app:layout_constraintStart_toEndOf="@id/countLikes"
+        app:layout_constraintStart_toEndOf="@id/heart"
         android:layout_marginStart="@dimen/common_spacing"
         app:layout_constraintTop_toBottomOf="@id/content"
         android:layout_marginTop="@dimen/common_spacing"
-        app:srcCompat="@drawable/share_variant" />
-
-    <TextView
-        android:id="@+id/countShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/share"
-        android:layout_marginStart="@dimen/common_spacing"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:text="@string/count_share" />
+        app:icon="@drawable/share_variant" />
 
     <TextView
         android:id="@+id/countView"
