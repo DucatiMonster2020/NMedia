@@ -4,13 +4,8 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.ActivityNewPostBinding
 
 class NewPostActivity : AppCompatActivity() {
@@ -20,10 +15,10 @@ class NewPostActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val editingText = intent?.getStringExtra(Intent.EXTRA_TEXT)
-            if (editingText != null) {
-                binding.content.setText(editingText)
-                binding.content.setSelection(editingText.length)
-            }
+        if (editingText != null) {
+            binding.content.setText(editingText)
+            binding.content.setSelection(editingText.length)
+        }
 
         binding.ok.setOnClickListener {
             val text = binding.content.text.toString()
