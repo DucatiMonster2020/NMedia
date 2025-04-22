@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.changeContent(result)
                 viewModel.save()
             } else {
-                viewModel.edited.value = null
+                viewModel.cancelEdit()
             }
         }
 
