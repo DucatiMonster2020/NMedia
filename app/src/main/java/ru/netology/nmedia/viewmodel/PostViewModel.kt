@@ -1,5 +1,4 @@
 package ru.netology.nmedia.viewmodel
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,8 +26,8 @@ class PostViewModel: ViewModel() {
     fun shareById(id: Long) = repository.shareById(id)
     fun removeById(id: Long) = repository.removeById(id)
     fun save() {
-        edited.value?.let {
-            repository.save(it)
+        edited.value?.let { post ->
+            repository.save(post)
         }
         edited.value = empty
     }

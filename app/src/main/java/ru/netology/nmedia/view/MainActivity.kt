@@ -20,16 +20,18 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val newPostLauncher = registerForActivityResult(NewPostContract) { result ->
-            result?.let { text ->
-                viewModel.changeContent(text)
+            result?.let {
+                viewModel.changeContent(it)
                 viewModel.save()
             }
         }
 
         val editPostLauncher = registerForActivityResult(NewPostContract) { result ->
-            result?.let { text ->
-                viewModel.changeContent(text)
+            if (result != null) {
+                viewModel.changeContent(result)
                 viewModel.save()
+            } else {
+                viewModel.edited.value = null
             }
         }
 
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onEdit(post: Post) {
+                viewModel.edit(post)
                 editPostLauncher.launch(post.content)
             }
 

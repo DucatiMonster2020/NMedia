@@ -1,7 +1,4 @@
 package ru.netology.nmedia.adapter
-
-import android.content.Intent
-import android.net.Uri
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
@@ -54,8 +51,7 @@ class PostViewHolder(
             else View.VISIBLE
             if (!post.videoUrl.isNullOrEmpty()) {
                 videoContainer.setOnClickListener {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
-                    itemView.context.startActivity(intent)
+                    onInteractionListener.onPlayVideo(post)
                 }
             }
         }
